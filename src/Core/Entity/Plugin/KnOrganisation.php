@@ -129,7 +129,7 @@ class KnOrganisation extends Relation {
         $this->removeField('AutoNum');
 
         // Identication of an organisation is required.
-        if($this->getField('MatchOga') == static::MATCH_PARENT_ENTITY){
+        if($this->getField('MatchOga') != static::MATCH_PARENT_ENTITY){
           $id_fields = [
             'BcCo',
             'CcNr',

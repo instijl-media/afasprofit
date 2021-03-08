@@ -26,6 +26,7 @@ class KnOrganisation extends Relation {
   const MATCH_ADDRESS        = 4;
   const MATCH_POSTAL_ADDRESS = 5;
   const MATCH_NEW            = 6;
+  const MATCH_PARENT_ENTITY  = 9;
 
   // --------------------------------------------------------------
   // CONSTRUCT
@@ -73,6 +74,7 @@ class KnOrganisation extends Relation {
           case static::MATCH_ADDRESS:
           case static::MATCH_POSTAL_ADDRESS:
           case static::MATCH_NEW:
+          case static::MATCH_PARENT_ENTITY:
             break;
 
           default:
@@ -169,6 +171,9 @@ class KnOrganisation extends Relation {
       if ($this->fieldExists('AutoNum')) {
         $this->setField('AutoNum', FALSE);
       }
+    }
+    elseif (!$this->getField('BcCo')) {
+      $this->setField('MatchOga', static::MATCH_PARENT_ENTITY);
     }
 
     return $errors;

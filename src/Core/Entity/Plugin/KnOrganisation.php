@@ -129,25 +129,27 @@ class KnOrganisation extends Relation {
         $this->removeField('AutoNum');
 
         // Identication of an organisation is required.
-        $id_fields = [
-          'BcCo',
-          'CcNr',
-          'FiNr',
-        ];
-        $found = FALSE;
-        foreach ($id_fields as $id_field) {
-          if ($this->getField($id_field)) {
-            // Identification is okay. Break out of the loop.
-            $found = TRUE;
-            break;
+        if($this->getField('MatchOga') == static::MATCH_PARENT_ENTITY){
+          $id_fields = [
+            'BcCo',
+            'CcNr',
+            'FiNr',
+          ];
+          $found = FALSE;
+          foreach ($id_fields as $id_field) {
+            if ($this->getField($id_field)) {
+              // Identification is okay. Break out of the loop.
+              $found = TRUE;
+              break;
+            }
           }
+          if (!$found) {
+            $errors[] = strtr('When updating or deleting an organisation, one of the following fields is required: !fields.', [
+              '!fields' => implode(', ', $id_fields),
+            ]);
+          }
+          break;
         }
-        if (!$found) {
-          $errors[] = strtr('When updating or deleting an organisation, one of the following fields is required: !fields.', [
-            '!fields' => implode(', ', $id_fields),
-          ]);
-        }
-        break;
     }
 
     if ($this->getAction() == static::FIELDS_INSERT && !$this->fieldExists('MatchOga')) {

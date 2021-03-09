@@ -78,9 +78,9 @@ abstract class KnSalesRelation extends Entity {
             '!entity' => $this->getEntityType(),
           ]);
         }
-        // When updating, do not update IsDb and PaCd fields.
+        // When updating, do not update IsDb field.
         $this->removeField('IsDb');
-        $this->removeField('PaCd');
+        //$this->removeField('PaCd');
         break;
     }
 
